@@ -1,0 +1,313 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tajawal', sans-serif;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    touch-action: pan-y; /* لتحسين استجابة اللمس */
+}
+
+/* تنسيق الصور */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out, transform 6s ease-in-out;
+    transform: scale(1.03);
+}
+
+.slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* طبقة التعتيم */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.0) 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+    padding: 20px;
+}
+
+.content {
+    pointer-events: auto;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* =========================================
+   تنسيق الشعار (اللوجو) واسم الشركة
+   ========================================= */
+
+/* تنسيق اللوجو بمرونة ليتناسب مع كل الشاشات */
+.brand-logo {
+    width: 100%;
+    max-width: clamp(200px, 25vw, 350px); /* حجم متجاوب: لا يصغر عن 200 ولا يكبر عن 350 */
+    height: auto;
+    /* ظل خفيف خلف اللوجو لضمان وضوحه حتى لو كانت صورة الفيلا فاتحة */
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.6));
+    opacity: 0.3;
+}
+
+/* تنسيق الجملة داخل الـ Span (اسم الشركة) */
+.brand-name {
+    color: #f99639; /* اللون الذهبي المميز */
+    font-weight: 700; /* خط عريض */
+    font-size: 1.1em; /* أكبر بنسبة 10% من باقي النص */
+    letter-spacing: 1px;
+}
+
+/* تحديث طفيف على الباراجراف ليتناسب مع التصميم الجديد */
+.content p {
+    color: #f5f5f5;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 300;
+    margin-bottom: clamp(80px, 4vw, 150px);
+    line-height: 1.6;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.8); /* ظل للنص لسهولة القراءة */
+    opacity: 0.4;
+}
+
+/* شريط التقدم */
+.progress-bar {
+    width: 100%;
+    max-width: 300px;
+    height: 3px;
+    background: rgba(255,255,255,0.2);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+}
+
+#progress {
+    height: 100%;
+    width: 0;
+    background: #f99639;
+    transition: width 0.1s linear;
+}
+
+/* أزرار التحكم - محسنة للمس */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #f99639;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    width: clamp(40px, 8vw, 60px);
+    height: clamp(40px, 8vw, 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s ease;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border-radius: 50%; /* شكل دائري أنيق */
+    pointer-events: auto;
+    opacity: 0.2;
+}
+
+.nav-btn:hover {
+    background: rgba(212, 175, 55, 0.3);
+    border-color: #f99639;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev { right: 90%; }
+.next { left: 90%; }
+
+/* العداد */
+.counter {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    color: #fff;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    z-index: 20;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+.counter #current-num { 
+    color: #f99639; 
+    font-weight: 700; 
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem); 
+}
+
+/* تعديلات مخصصة للشاشات الصغيرة جداً (الجوالات بالطول) */
+@media (max-width: 480px) {
+    .nav-btn {
+        display: none; /* إخفاء الأزرار الجانبية في الجوال والاعتماد على السحب */
+    }
+    .counter {
+        right: 50%;
+        transform: translateX(50%); /* توسيط العداد في أسفل الشاشة */
+        bottom: 30px;
+    }
+    .overlay {
+        align-items: flex-end; /* إنزال النص قليلاً لعدم تغطية تفاصيل الصورة */
+        padding-bottom: 100px;
+    }
+}
+
+/* زر ملء الشاشة */
+.fullscreen-btn {
+    position: absolute;
+    top: 5%;
+    left: 5%; /* وضعه في أعلى يسار الشاشة */
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #f99639;
+    width: clamp(40px, 6vw, 50px);
+    height: clamp(40px, 6vw, 50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 30;
+    border-radius: 8px; /* حواف ناعمة راقية */
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    opacity: 0.5;
+}
+
+.fullscreen-btn svg {
+    width: 60%;
+    height: 60%;
+}
+
+.fullscreen-btn:hover {
+    background: rgba(212, 175, 55, 0.4);
+    border-color: #f99639;
+    transform: scale(1.1);
+}
+
+/* إخفاء الزر على الشاشات الصغيرة جداً إذا أردت (اختياري) */
+@media (max-width: 480px) {
+    .fullscreen-btn {
+        top: 20px;
+        left: 20px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* =========================================
+   تنسيق شريط التواصل (كبسولة وسطية سفلية)
+   ========================================= */
+.contact-bar {
+    position: absolute;
+    bottom: 40px; /* المسافة من الأسفل */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* المسافة بين العناصر والفواصل */
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px); /* تأثير الزجاج المغشى */
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 12px 30px;
+    border-radius: 50px; /* شكل بيضاوي أنيق جداً (Pill) */
+    z-index: 25;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    width: max-content;
+    max-width: 95%; /* لمنع تجاوز عرض الشاشة في الجوال */
+    flex-wrap: wrap; /* للسماح بنزول الأرقام لسطر جديد في الشاشات الصغيرة جداً */
+    opacity: 0.6;
+}
+
+/* العنصر الواحد (أيقونة + رقم) */
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* مسافة صغيرة بين الأيقونة والرقم */
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    direction: ltr; /* لضبط ظهور الرقم بشكل سليم */
+    transition: color 0.3s ease;
+}
+
+/* تنسيق الأيقونة الصغيرة */
+.contact-item svg {
+    width: 16px;
+    height: 16px;
+    color: #f99639; /* لون ذهبي */
+    transition: transform 0.3s ease;
+}
+
+/* تأثير التمرير (Hover) */
+.contact-item:hover {
+    color: #ffffff;
+}
+
+.contact-item:hover svg {
+    transform: scale(1.2); /* تكبير الأيقونة قليلاً كنوع من التفاعل */
+    color: #fff;
+}
+
+/* الفاصل بين الأرقام */
+.contact-divider {
+    width: 1px;
+    height: 18px;
+    background-color: rgba(212, 175, 55, 0.4); /* خط ذهبي عمودي شفاف */
+}
+
+/* =========================================
+   تعديلات الجوال (UX Design)
+   ========================================= */
+@media (max-width: 768px) {
+    .contact-bar {
+        bottom: 25px;
+        padding: 10px 20px;
+        gap: 12px;
+        border-radius: 20px; /* تقليل الاستدارة إذا تحولت لسطرين */
+    }
+    
+    .contact-divider {
+        display: none; /* إخفاء الفواصل في الجوال في حال نزلت الأرقام تحت بعضها */
+    }
+
+    .contact-item {
+        font-size: 0.95rem;
+    }
+
+    /* نقل عداد الصور إلى الأعلى في الجوال لعدم التداخل مع أرقام التواصل */
+    .counter {
+        right: 20px !important;
+        top: 20px !important;
+        bottom: auto !important;
+        transform: none !important;
+    }
+}

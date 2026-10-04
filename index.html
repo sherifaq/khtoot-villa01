@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطوط للاستشارات الهندسية | تصميم الفلل الفاخرة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- حاوية العرض -->
+    <div class="slideshow-container">
+        
+        <!-- صور العرض (عنصرين فقط للأداء العالي) -->
+        <img id="slide-a" class="slide active" src="" alt="فيلا فاخرة">
+        <img id="slide-b" class="slide" src="" alt="فيلا فاخرة">
+
+        <!-- طبقة التعتيم والنصوص -->
+        <div class="overlay">
+            <div class="content">
+                <!-- استبدال H1 بصورة اللوجو (ضع مسار اللوجو الصحيح في src) -->
+                <img src="logo.png" alt="شعار خطوط للاستشارات الهندسية" class="brand-logo">
+                <div class="progress-bar"><div id="progress"></div></div>
+                
+                <!-- الوصف مدمج معه اسم الشركة في span -->
+                <p>
+                    <span class="brand-name">خطوط للاستشارات الهندسية</span> - 
+                    إبداع معماري يعكس فخامة الأصالة السعودية الحديثة
+                </p>
+                
+            </div>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <button class="nav-btn prev" onclick="prevSlide()">&#10095;</button>
+        <button class="nav-btn next" onclick="nextSlide()">&#10094;</button>
+        
+        <!-- عداد الصور -->
+        <div class="counter"><span id="current-num">1</span> / <span id="total-num">0</span></div>
+    
+        <!-- زر ملء الشاشة -->
+        <button id="fullscreen-btn" class="fullscreen-btn" onclick="toggleFullScreen()" title="ملء الشاشة">
+            <svg id="fs-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <!-- أيقونة التكبير الافتراضية -->
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+            </svg>
+        </button>
+        
+        <!-- شريط التواصل (أفقي في المنتصف) -->
+        <div class="contact-bar">
+            <!-- الرقم الأول -->
+            <a href="https://wa.me/966537073111" class="contact-item" target="_blank" rel="noopener noreferrer">
+                <!-- أيقونة الواتساب متناسقة مع نفس التصميم -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
+                    <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"></path>
+                </svg>
+                <span>+966 53 7073 111</span>
+            </a>
+            
+            <span class="contact-divider"></span> <!-- فاصل ذهبي -->
+
+            <!-- الرقم الثاني -->
+            <a href="tel:+966559876543" class="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>+966 50 9266 578</span>
+            </a>
+
+            <span class="contact-divider"></span> <!-- فاصل ذهبي -->
+
+            <!-- الرقم الثالث -->
+            <a href="tel:+966541112222" class="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>+966 16 3630 003</span>
+            </a>
+
+            <span class="contact-divider"></span> <!-- فاصل ذهبي -->
+
+            <a href="mailto:acc.khtoot.onaizah@gmail.com" class="contact-item">
+                <!-- أيقونة البريد الإلكتروني -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>info@khotoot.com</span>
+            </a>
+        </div>
+    </div>
+
+
+    <!-- استدعاء ملف الصور أولاً ثم ملف التشغيل -->
+    <script src="images.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
